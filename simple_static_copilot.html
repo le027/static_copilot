@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .container {
+            position: relative;
+            width: 400px;
+            margin: 20px;
+        }
+
+        .textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: none;
+            background: transparent;
+        }
+
+        .suggestion-overlay {
+            position: absolute;
+            top: 11px;
+            left: 10px;
+            pointer-events: none;
+            color: transparent;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .suggestion-overlay .suggestion {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <textarea class="textarea" placeholder="Write something..."></textarea>
+        <div class="suggestion-overlay"></div>
+    </div>
+
+    <script>
+        const textarea = document.querySelector('.textarea');
+        const suggestionOverlay = document.querySelector('.suggestion-overlay');
+
+        //dictionary
+        let suggestions = [
+            "hello, how are you?",
+            "how are you?",
+            "how old are you?",
+            "how much coffee?",
+            "how many laptops?",
+            "I like pizza",
+            "I like ice-cream",
+            "what's your name?",
+            "do you like coffee?",
+            "where are you from?",
+            "what's your favorite color?",
+            "do you like sports?",
+            "I love reading",
+            "what's your favorite movie?",
+            "do you have any pets?",
+            "can you play music?",
+            "what's your favorite food?",
+            "do you play video games?",
+            "where do you live?",
+            "what's your favorite hobby?",
+            "do you speak any languages?",
+            "do you like to travel?",
+            "I enjoy hiking",
+            "do you like music?",
+            "what time is it?",
+            "what's the weather like?",
+            "how was your day?",
+            "do you like cooking?",
+            "have you ever been abroad?",
+            "do you enjoy dancing?",
+            "what's your favorite book?",
+            "do you prefer cats or dogs?",
+            "what's your favorite season?",
+            "have you seen any good shows lately?",
+            "do you enjoy painting?",
+            "what do you do for work?",
+            "what kind of music do you like?",
+            "what's your dream vacation?",
+            "do you believe in luck?",
+            "what's your favorite dessert?",
+            "my name is John",
+            "my hobby is painting",
+            "my favorite color is blue",
+            "my dream is to travel the world",
+            "my house is near the beach",
+            "my favorite food is sushi",
+            "my favorite song is Imagine",
+            "my favorite movie is Inception",
+            "my favorite sport is basketball",
+            "my favorite animal is the dolphin"
+        ];
+
+        let actualSuggestion = "";
+
+        textarea.addEventListener('input', function(e) {
+            const text = textarea.value;
+
+            suggestionOverlay.innerHTML = '';
+
+            let suggestionsMatch = [];
+
+            if (textarea.value) {
+                //insert all matching suggestions into the array
+                for(let s of suggestions){
+                    if(s.startsWith(text)){
+                        suggestionsMatch.push(s);
+                    } 
+                }
+                //randomly pick one of the matching suggestion
+                if(!suggestionsMatch.includes(actualSuggestion)){
+                    actualSuggestion = suggestionsMatch[Math.floor(Math.random() * suggestionsMatch.length)];
+                }
+
+                const remainingSuggestion = actualSuggestion.slice(text.length);
+                suggestionOverlay.innerHTML = text + `<span class="suggestion">${remainingSuggestion}</span>`;
+            }
+
+        });
+
+        //handles the Tab click to complete the suggestion
+        textarea.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab' && suggestionOverlay.querySelector('.suggestion')) {
+                e.preventDefault();
+                
+                const text = textarea.value;
+                const suggestionText = suggestionOverlay.querySelector('.suggestion').textContent;
+                
+                textarea.value = text + suggestionText;
+                
+                suggestionOverlay.innerHTML = '';
+            }
+        });
+
+    </script>
+</body>
+</html>
