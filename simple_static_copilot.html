@@ -49,56 +49,10 @@
 
         //dictionary
         let suggestions = [
-            "hello, how are you?",
-            "how are you?",
-            "how old are you?",
-            "how much coffee?",
-            "how many laptops?",
-            "I like pizza",
-            "I like ice-cream",
-            "what's your name?",
-            "do you like coffee?",
-            "where are you from?",
-            "what's your favorite color?",
-            "do you like sports?",
-            "I love reading",
-            "what's your favorite movie?",
-            "do you have any pets?",
-            "can you play music?",
-            "what's your favorite food?",
-            "do you play video games?",
-            "where do you live?",
-            "what's your favorite hobby?",
-            "do you speak any languages?",
-            "do you like to travel?",
-            "I enjoy hiking",
-            "do you like music?",
-            "what time is it?",
-            "what's the weather like?",
-            "how was your day?",
-            "do you like cooking?",
-            "have you ever been abroad?",
-            "do you enjoy dancing?",
-            "what's your favorite book?",
-            "do you prefer cats or dogs?",
-            "what's your favorite season?",
-            "have you seen any good shows lately?",
-            "do you enjoy painting?",
-            "what do you do for work?",
-            "what kind of music do you like?",
-            "what's your dream vacation?",
-            "do you believe in luck?",
-            "what's your favorite dessert?",
-            "my name is John",
-            "my hobby is painting",
-            "my favorite color is blue",
-            "my dream is to travel the world",
-            "my house is near the beach",
-            "my favorite food is sushi",
-            "my favorite song is Imagine",
-            "my favorite movie is Inception",
-            "my favorite sport is basketball",
-            "my favorite animal is the dolphin"
+            "The length of the blue whale is 30 meters",
+            "The length of the blue whale is 150 meters",
+            "the length of the blue whale is 30 meters",
+            "the length of the blue whale is 150 meters"
         ];
 
         let actualSuggestion = "";
@@ -123,7 +77,14 @@
                 }
 
                 const remainingSuggestion = actualSuggestion.slice(text.length);
-                suggestionOverlay.innerHTML = text + `<span class="suggestion">${remainingSuggestion}</span>`;
+
+                //the suggestion will be showed only after the user type 10 characters,
+                //in this way we give the feeling that the suggestion is based on what the user wrote
+                if(text.length>10){
+                    suggestionOverlay.innerHTML = text + `<span class="suggestion">${remainingSuggestion}</span>`;
+                } else {
+                    suggestionOverlay.innerHTML = text;
+                }
             }
 
         });
