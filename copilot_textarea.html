@@ -47,6 +47,9 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
         }
 
         .popup-content {
@@ -57,7 +60,7 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
         }
 
-        .popup-content button {
+        button {
             padding: 10px 20px;
             background-color: #007BFF;
             color: white;
@@ -67,7 +70,7 @@
             font-size: 16px;
         }
 
-        .popup-content button:hover {
+        button:hover {
             background-color: #0056b3;
         }
 
@@ -77,28 +80,28 @@
     </style>
 </head>
 <body>
-
-    <div class="popup" id="popup">
-        <div class="popup-content">
-            <p><strong>Do you want to start the test?</strong></p>
-            <button id="startButton">Start</button>
-        </div>
-    </div>
     
     <div class="container">
         <textarea class="textarea" placeholder="Write something..."></textarea>
         <div class="suggestion-overlay"></div>
-        <button id="send-response">Send</button>
+        <button id="submit-response">Submit</button>
+    </div>
+
+    <!-- pop up showed after the subssion -->
+    <div class="popup hidden" id="thankYouPopup">
+        <div class="popup-content">
+            <p><strong>The test is over, thank you for participating!</strong></p>
+        </div>
     </div>
 
     <script>
         const textarea = document.querySelector('.textarea');
         const suggestionOverlay = document.querySelector('.suggestion-overlay');
 
-        const popup = document.getElementById('popup');
         const startButton = document.getElementById('startButton');
 
-        const sendButton = document.getElementById('send-response');
+        const submitButton = document.getElementById('submit-response');
+        const thankYouPopup = document.getElementById('thankYouPopup');
 
         //dictionary
         let suggestions = [
@@ -160,24 +163,8 @@
             }
         });
 
-        //CLICK ON THE START BUTTON
-        startButton.addEventListener('click', () => {
-            //ask the user id 
-            fetch('/generate-user-id')
-                .then((res) => res.json())
-                .then((data) => {
-                    const userId = data.userId;
-                    localStorage.setItem('userId', userId); //save the user id in the local storage
-                    document.getElementById('popup').classList.add('hidden'); //hide the pop-up
-                    console.log("User ID generated: " + userId);
-                })
-                .catch((error) => {
-                    console.error('Error during userId generation:', error);
-                });
-        });
-
-        //CLICK ON THE SEND BUTTON
-        sendButton.addEventListener('click', () => {
+        //handle the click on the submit button
+        submitButton.addEventListener('click', () => {
             const userId = localStorage.getItem('userId');
             const userResponse = textarea.value.trim();
 
@@ -191,7 +178,7 @@
                 return;
             }
 
-            //send data to the server
+            //submit data to the server
             fetch('/save-response', {
                 method: 'POST',
                 headers: {
@@ -204,11 +191,13 @@
             })
             .then((res) => res.json())
             .then((data) => {
-                alert(data.message);
-                textarea.value = ""; //reset the textarea after the send
+                console.log(data.message);
+                textarea.disabled = true;
+                submitButton.disabled = true;
+                thankYouPopup.classList.remove('hidden');
             })
             .catch((error) => {
-                console.error('send error:', error);
+                console.error('submit error:', error);
             });
         });
 
