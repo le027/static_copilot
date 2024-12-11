@@ -1,14 +1,9 @@
 [
   {
-    "userId": "695800",
-    "response": "the length of the blue whale is 150 meters"
-  },
-  {
-    "userId": "729963",
-    "response": "the length of the blue whale is 30 meters"
-  },
-  {
-    "userId": "215784",
+    "userId": "434784",
+    "years_from_last_degree": "<2 years",
+    "highest_degree": "Bachelor’s degree",
+    "educational_path": "Science",
     "response": "the length of the blue whale is 30 meters"
   }
 ]
