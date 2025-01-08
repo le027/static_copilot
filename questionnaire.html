@@ -6,24 +6,57 @@
     <title>Questionnaire</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f8;
             font-family: Arial, sans-serif;
-            margin: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container.blurred {
+            filter: blur(5px); 
+            pointer-events: none; /* disable the interaction with the other element under the pop up */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
         }
 
         .question {
             margin-bottom: 20px;
+            text-align: left;
         }
 
         label {
             font-weight: normal;
-            display: inline-block;
-            margin-left: 5px;
+            margin-left: 10px;
+            font-size: 16px;
         }
 
         .radio-group {
             display: flex;
             align-items: center;
             margin-bottom: 10px; 
+        }
+
+        input[type="radio"] {
+            accent-color: #333;
+            margin-right: 10px;
         }
 
         .popup {
@@ -37,9 +70,6 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            font-family: 'Roboto', sans-serif;
-            font-size: 16px;
-            line-height: 1.5;
         }
 
         .popup-content {
@@ -52,16 +82,21 @@
 
         button {
             padding: 10px 20px;
-            background-color: #007BFF;
+            background-color: #000;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            font-weight: bold;
+            position: relative;
+            bottom: 0;
+            right: 0;
+            float: right;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #333;
         }
 
         .hidden {
@@ -70,35 +105,49 @@
     </style>
 </head>
 <body>
-    <h1>Questionnaire</h1>
-    <form id="questionnaire">
-        <p>How many years ago did you get your last degree?</p>
-        <div class="question">
-            <input type="radio" id="q1-option1" name="question1" value="<2 years" required> <label for="q1-option1"><2 years</label><br>
-            <input type="radio" id="q1-option2" name="question1" value="2-5 years"> <label for="q1-option2">2-5 years</label><br>
-            <input type="radio" id="q1-option3" name="question1" value=">5 years"> <label for="q1-option3">>5 years</label><br>
-            <input type="radio" id="q1-option4" name="question1" value="No degree"> <label for="q1-option4">No degree</label>
-        </div>
+    <div class="container">
+        <h1>Questionnaire</h1>
+        <form id="questionnaire">
+            <div class="question">
+                <p>1. How many years ago did you get your last degree?</p>
+                <input type="radio" id="q1-option1" name="question1" value="<2 years" required>
+                <label for="q1-option1">&lt;2 years</label><br>
+                <input type="radio" id="q1-option2" name="question1" value="2-5 years">
+                <label for="q1-option2">2-5 years</label><br>
+                <input type="radio" id="q1-option3" name="question1" value=">5 years">
+                <label for="q1-option3">&gt;5 years</label><br>
+                <input type="radio" id="q1-option4" name="question1" value="No degree">
+                <label for="q1-option4">No degree</label>
+            </div>
 
-        <p>What is the highest degree you have obtained?</p>
-        <div class="question">
-                <input type="radio" id="q2-option1" name="question2" value="Bachelor’s degree" required> <label for="q2-option1">Bachelor’s degree</label><br>
-                <input type="radio" id="q2-option2" name="question2" value="Master’s degree"> <label for="q2-option2">Master’s degree</label><br>
-                <input type="radio" id="q2-option3" name="question2" value="PhD"> <label for="q2-option3">PhD</label><br>
-                <input type="radio" id="q2-option4" name="question2" value="No degree"> <label for="q2-option4">No degree</label>
-        </div>
+            <div class="question">
+                <p>2. What is the highest degree you have obtained?</p>
+                <input type="radio" id="q2-option1" name="question2" value="Bachelor’s degree" required>
+                <label for="q2-option1">Bachelor’s degree</label><br>
+                <input type="radio" id="q2-option2" name="question2" value="Master’s degree">
+                <label for="q2-option2">Master’s degree</label><br>
+                <input type="radio" id="q2-option3" name="question2" value="PhD">
+                <label for="q2-option3">PhD</label><br>
+                <input type="radio" id="q2-option4" name="question2" value="No degree">
+                <label for="q2-option4">No degree</label>
+            </div>
 
-        <p>What was the nature of your educational path?</p>
-        <div class="question">
-            <input type="radio" id="q3-option1" name="question3" value="Science" required> <label for="q3-option1">Science</label><br>
-            <input type="radio" id="q3-option2" name="question3" value="Literature"> <label for="q3-option2">Literature</label><br>
-            <input type="radio" id="q3-option3" name="question3" value="Economics"> <label for="q3-option3">Economics</label><br>
-            <input type="radio" id="q3-option4" name="question3" value="No degree"> <label for="q3-option4">No degree</label>
-        </div>
+            <div class="question">
+                <p>3. What was the nature of your educational path?</p>
+                <input type="radio" id="q3-option1" name="question3" value="Science" required>
+                <label for="q3-option1">Science</label><br>
+                <input type="radio" id="q3-option2" name="question3" value="Literature">
+                <label for="q3-option2">Literature</label><br>
+                <input type="radio" id="q3-option3" name="question3" value="Economics">
+                <label for="q3-option3">Economics</label><br>
+                <input type="radio" id="q3-option4" name="question3" value="No degree">
+                <label for="q3-option4">No degree</label>
+            </div>
 
-        <button type="submit">Submit</button>
-    </form>
-
+            <button type="submit">SEND</button>
+        </form>
+    </div>
+    
     <!-- pop up for the user id generation -->
     <div class="popup" id="popup">
         <div class="popup-content">
@@ -111,10 +160,12 @@
         const popup = document.getElementById('popup');
         const generateIdButton = document.getElementById('generateId');
         const questionnaire = document.getElementById('questionnaire');
+        const container = document.querySelector('.container');
 
         //show the pop up when the page is loaded
         window.onload = () => {
             popup.classList.remove('hidden');
+            container.classList.add('blurred');
         };
 
         //user id generation calling the backend 
@@ -124,7 +175,8 @@
                 .then((data) => {
                     const userId = data.userId;
                     localStorage.setItem('userId', userId);
-                    popup.classList.add('hidden'); //hide the pop u
+                    popup.classList.add('hidden'); //hide the pop up
+                    container.classList.remove('blurred');
                     console.log('Generated User ID:', userId);
                 })
                 .catch((err) => console.error('Error generating ID:', err));
